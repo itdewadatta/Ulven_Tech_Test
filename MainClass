@@ -1,0 +1,38 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Random;
+import java.util.Scanner;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Scanner myObj = new Scanner(System.in);
+		System.out.println("Enter number");
+
+		int number = myObj.nextInt();
+		if (number < 229) {
+			generateFile(number);
+		} else {
+
+			System.out.println("Number is: " + number + " and it is out of range");
+		}
+	}
+
+	private static void generateFile(int number) {
+		try {
+			FileWriter myWriter = new FileWriter("filename.txt");
+			for (int i = 0; i < number; i++) {
+				byte[] array = new byte[100]; // length is bounded by 7
+				new Random().nextBytes(array);
+				String generatedString = new String(array, Charset.forName("UTF-8"));
+				myWriter.write(generatedString);
+			} 
+			myWriter.close();
+			System.out.println("Successfully wrote to the file.");
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+		
+	}
+}
